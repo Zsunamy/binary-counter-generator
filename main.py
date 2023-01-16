@@ -1,6 +1,7 @@
 import pydatatable
-from table_element import *
+from table_element import TableElement
 from int_as_binary import IntAsBinary
+from terms import Terms
 
 
 def get_terms_for_flipflop(index: int, data: list[TableElement]):
@@ -36,22 +37,24 @@ def main():
         title.append(ks[i])
     counter.add_data(data, title)
 
-    next_terms = []
-    must_js, maybe_js = get_terms_for_flipflop(0, table)["j"]
-    must_ks, maybe_ks = get_terms_for_flipflop(0, table)["k"]
-    combined_js = must_js + maybe_js
-    minimized_list = [False] * len(combined_js)
-    for i, v in enumerate(combined_js):
-        if i != len(combined_js):
-            for j, j_v in enumerate(combined_js[i + 1:]):
-                buffer = v.minimize(j_v)
-                if buffer is not None:
-                    next_terms.append(buffer)
-                    minimized_list[i] = True
-                    minimized_list[j + i + 1] = True
-        if not minimized_list[i]:
-            next_terms.append(v)
-    pass
+    terms: Terms = Terms(table, 0, "j")
+    minimized: [IntAsBinary] = terms.get_minimal_terms()
+    print(minimized)
+
+    # next_terms = []
+    # must_js, maybe_js = get_terms_for_flipflop(0, table)["j"]
+    # must_ks, maybe_ks = get_terms_for_flipflop(0, table)["k"]
+    # combined_js = must_js + maybe_js
+    # minimized_list = [False] * len(combined_js)
+    # for i, v in enumerate(combined_js)[:-1]:
+    #    for j in range(i + 1, len(combined_js)):
+    #        buffer = v.minimize(combined_js[j])
+    #        if buffer is not None:
+    #            next_terms.append(buffer)
+    #            minimized_list[i] = True
+    #            minimized_list[j] = True
+    #    if not minimized_list[i]:
+    #        next_terms.append(v)
 
 
 if __name__ == "__main__":

@@ -1,13 +1,13 @@
 class IntAsBinary:
-    def __init__(self, value: int = None, binary: list[bool | None] = None, digits: int = None):
-        test = digits is None
+    def __init__(self, value: int = None, binary: list[bool | None] = None, digits: int = None) -> None:
         if (digits is None) and (value is not None):
             digits = value.bit_length()
         elif digits is None:
             digits = len(binary)
+
         if value is not None:
-            self.value = value
-            self.binary = [((1 << i) & value) != 0 for i in range(value.bit_length())] + ([False] * (digits - value.bit_length()))
+            self.value: int | None = value
+            self.binary: [bool | None] = [((1 << i) & value) != 0 for i in range(value.bit_length())] + ([False] * (digits - value.bit_length()))
         elif binary is not None:
             self.binary = binary + ([False] * (digits - len(binary)))
             if None in binary:
@@ -16,8 +16,8 @@ class IntAsBinary:
                 self.value = sum([(1 << i) for i in binary if i])
 
     def minimize(self, other):
-        new = IntAsBinary(binary=self.binary)
-        has_changed = False
+        new: IntAsBinary = IntAsBinary(binary=self.binary[:])
+        has_changed: bool = False
         for i, v in enumerate(self.binary):
             if v != other.binary[i] and (v is not None) and (other.binary[i]) is not None:
                 if not has_changed:
@@ -31,10 +31,10 @@ class IntAsBinary:
             return self
         return other
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
+        if len(other.binary) != len(self.binary):
+            return False
         for i, v in enumerate(self.binary):
             if v != other.binary[i]:
                 return False
         return True
-
-
