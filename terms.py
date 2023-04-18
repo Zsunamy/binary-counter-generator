@@ -3,6 +3,17 @@ from table_element import TableElement
 
 
 def minimize_batch(terms: [IntAsBinary]) -> ([IntAsBinary], bool):
+    no_double_terms: [IntAsBinary] = []
+    for i, v in enumerate(terms):
+        is_double = False
+        for j in range(i + 1, len(terms)):
+            if v.__eq__(terms[j]):
+                is_double = True
+                break
+        if not is_double:
+            no_double_terms.append(v)
+
+    terms = no_double_terms
     has_changed: bool = False
     new_terms: [IntAsBinary] = []
     is_minimized_list: [bool] = [False] * len(terms)
@@ -16,9 +27,6 @@ def minimize_batch(terms: [IntAsBinary]) -> ([IntAsBinary], bool):
                 has_changed = True
         if not is_minimized_list[i]:
             new_terms.append(v)
-
-    if not is_minimized_list[-1]:
-        new_terms.append(terms[-1])
 
     return new_terms, has_changed
 

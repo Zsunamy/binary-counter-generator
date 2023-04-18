@@ -19,7 +19,7 @@ class IntAsBinary:
         new: IntAsBinary = IntAsBinary(binary=self.binary[:])
         has_changed: bool = False
         for i, v in enumerate(self.binary):
-            if v != other.binary[i] and (v is not None) and (other.binary[i]) is not None:
+            if v != other.binary[i] and (v is not None) and (other.binary[i] is not None):
                 if not has_changed:
                     new.binary[i] = None
                     has_changed = True
@@ -27,9 +27,7 @@ class IntAsBinary:
                     return None
         if has_changed:
             return new
-        if self.binary.count(None) > other.binary.count(None):
-            return self
-        return other
+        return None
 
     def __eq__(self, other) -> bool:
         if len(other.binary) != len(self.binary):
@@ -38,3 +36,8 @@ class IntAsBinary:
             if v != other.binary[i]:
                 return False
         return True
+
+    def __str__(self):
+        if self.value is not None:
+            return str(self.value)
+        return self.binary

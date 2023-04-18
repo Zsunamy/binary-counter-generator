@@ -9,6 +9,17 @@ def get_j_k_encoding(start: bool, end: bool) -> dict:
         return {"j": None, "k": True}
 
 
+# def get_j_k_encoding(start, end):
+#    if start and not end:
+#        return {"T": 1}
+#    elif start and end:
+#        return {"T": 0}
+#    elif not start and end:
+#        return {"T": 1}
+#    else:
+#        return {"T": 0}
+
+
 class TableElement:
     def __init__(self, value: int, mod: int) -> None:
         self.value: int = value
@@ -26,13 +37,5 @@ class TableElement:
     def to_list(self) -> [str]:
         buffer: [str] = [self.value, self.next_value]
         for i in self.flipflops:
-            if i["j"] is None:
-                buffer.append("X")
-            else:
-                buffer.append(i["j"])
-
-            if i["k"] is None:
-                buffer.append("X")
-            else:
-                buffer.append(i["k"])
+            buffer.append(i["T"])
         return buffer

@@ -1,4 +1,4 @@
-import pydatatable
+# import pydatatable
 from table_element import TableElement
 from int_as_binary import IntAsBinary
 from terms import Terms
@@ -24,20 +24,23 @@ def get_terms_for_flipflop(index: int, data: list[TableElement]):
 
 
 def main():
-    mod_counter = int(input("Please enter your mod counter: "))
+    # mod_counter = int(input("Please enter your mod counter: "))
+    mod_counter = 7
+
     table = [TableElement(i, mod_counter) for i in range(mod_counter)]
 
-    counter = pydatatable.Table(location='counter', title=f'mod {mod_counter} counter')
-    data = [i.to_list() for i in table]
-    js = [f"J{i}" for i in range((mod_counter - 1).bit_length())]
-    ks = [f"K{i}" for i in range((mod_counter - 1).bit_length())]
-    title = ["x", "x\'"]
-    for i, v in enumerate(js):
-        title.append(v)
-        title.append(ks[i])
-    counter.add_data(data, title)
+    # counter = pydatatable.Table(location='counter', title=f'mod {mod_counter} counter')
+    # data = [i.to_list() for i in table]
+    # js = [f"J{i}" for i in range((mod_counter - 1).bit_length())]
+    # ks = [f"K{i}" for i in range((mod_counter - 1).bit_length())]
+    # title = ["x", "x\'"]
+    # for i, v in enumerate(js):
+    #     title.append(v)
+    #     title.append(ks[i])
+    # counter.add_data(data, title)
+    # counter.open()
 
-    terms: Terms = Terms(table, 0, "j")
+    terms: Terms = Terms(table, 0, "k")
     minimized: [IntAsBinary] = terms.get_minimal_terms()
     print(minimized)
 
